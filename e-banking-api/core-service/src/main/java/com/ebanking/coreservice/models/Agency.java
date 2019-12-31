@@ -18,7 +18,7 @@ public class Agency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "The agency name can't be empty")
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     @Size(max = 50)
     private String name;
     @NotBlank(message = "The address can't be empty")
@@ -26,9 +26,10 @@ public class Agency {
     @Size(max = 100, message = "address is not valid")
     private String address;
     @NotBlank(message = "The phone can't be empty")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @Size(min = 10, max = 14)
     private String phone;
+    @Column(updatable = false)
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
     @JsonFormat(pattern = "dd-MM-yyyy")

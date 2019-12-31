@@ -32,7 +32,7 @@ public class Customer {
     @Size(max = 50)
     private String cin;
     @NotBlank(message = "The phone can't be empty")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @Size(min = 10, max = 14)
     private String phone;
     @NotBlank(message = "The address can't be empty")
@@ -51,6 +51,14 @@ public class Customer {
     @Column(nullable = false)
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDay;
+    @NotBlank(message = "The account login can't be empty")
+    @Column(unique = true, nullable = false)
+    @Size(min = 8, max = 50)
+    private String login;
+    @NotBlank(message = "The account password can't be empty")
+    @Column(nullable = false)
+    @Size(min = 8, max = 50)
+    private String password;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -136,6 +144,22 @@ public class Customer {
 
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Date getCreatedAt() {

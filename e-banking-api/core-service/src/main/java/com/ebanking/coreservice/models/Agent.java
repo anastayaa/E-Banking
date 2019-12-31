@@ -27,7 +27,10 @@ public class Agent {
     @Column(nullable = false)
     @Size(max = 50)
     private String lastName;
+    @Column(unique = true, nullable = false)
+    private String identifier;
     @NotBlank(message = "The email can't be empty")
+    @Column(unique = true, nullable = false)
     @Size(max = 50, message = "email is not valid")
     @Email
     private String email;
@@ -77,6 +80,14 @@ public class Agent {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getEmail() {
@@ -151,10 +162,14 @@ public class Agent {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", identifier='" + identifier + '\'' +
+                ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", contracts=" + contracts +
+                ", agency=" + agency +
                 '}';
     }
 }
