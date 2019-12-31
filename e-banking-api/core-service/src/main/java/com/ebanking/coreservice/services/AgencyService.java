@@ -20,8 +20,16 @@ public class AgencyService {
         }
     }
 
-    public Iterable<Agency> findAllAgency() {
+    public Iterable<Agency> findAllAgencies() {
         return agencyRepository.findAll();
+    }
+
+    public Iterable<Agency> findAllAgenciesByAddress(String address) {
+        Iterable<Agency> agencies = agencyRepository.findByAddressLike("%" + address + "%");
+        if (agencies == null) {
+            throw new AgencyNameException("Agency with address '" + address + "' not found");
+        }
+        return agencies;
     }
 
     public Agency findAgencyByName(String agencyName) {

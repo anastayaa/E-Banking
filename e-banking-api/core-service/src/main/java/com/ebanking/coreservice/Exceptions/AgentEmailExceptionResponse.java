@@ -4,8 +4,8 @@ public class AgentEmailExceptionResponse {
 
     private String agent;
 
-    public AgentEmailExceptionResponse(String agentEmail) {
-        this.agent = agentEmail;
+    public AgentEmailExceptionResponse(String agent) {
+        this.agent = agent;
     }
 
     public String getAgent() {
