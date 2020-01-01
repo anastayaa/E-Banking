@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import BurgerKing from "../Project/Admin/BurgerKing";
 //import PropTypes from "prop-types";
 //import { connect } from "react-redux";
 
@@ -15,6 +16,7 @@ class Header extends Component {
         return (
             <div className="navbar navbar-expand-sm navbar-dark mb-4" style={{backgroundColor:'#EB5C09'}}>
             <div className="container">
+                <BurgerKing className="navbar-brand">OK</BurgerKing>
                 <Link className="navbar-brand" to="/dashboard">
                      Dashboard
                 </Link>
