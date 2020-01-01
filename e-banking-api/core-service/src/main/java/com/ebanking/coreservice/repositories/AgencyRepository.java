@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface AgencyRepository extends CrudRepository<Agency, Long> {
 
     Agency findByName(String name);
+
+    Iterable<Agency> findByAddressLike(String address);
 }

@@ -40,22 +40,19 @@ public class Customer {
     @Size(max = 100, message = "address is not valid")
     private String address;
     @NotBlank(message = "The email can't be empty")
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     @Size(max = 50, message = "email is not valid")
     @Email
     private String email;
     @NotBlank(message = "The gender can't be empty")
     @Column(nullable = false)
     private String gender;
-    @NotBlank(message = "The birthday can't be empty")
     @Column(nullable = false)
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDay;
-    @NotBlank(message = "The account login can't be empty")
     @Column(unique = true, nullable = false)
     @Size(min = 8, max = 50)
     private String login;
-    @NotBlank(message = "The account password can't be empty")
     @Column(nullable = false)
     @Size(min = 8, max = 50)
     private String password;

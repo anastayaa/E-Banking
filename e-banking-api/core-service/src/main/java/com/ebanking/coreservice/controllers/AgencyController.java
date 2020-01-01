@@ -31,8 +31,13 @@ public class AgencyController {
     }
 
     @GetMapping("/all")
-    public Iterable<Agency> getAllAgency() {
-        return agencyService.findAllAgency();
+    public Iterable<Agency> getAllAgencies() {
+        return agencyService.findAllAgencies();
+    }
+
+    @GetMapping("/all/{address}")
+    public Iterable<Agency> getAllAgenciesByAddress(@PathVariable String address) {
+        return agencyService.findAllAgenciesByAddress(address);
     }
 
     @GetMapping("/{agency_name}")

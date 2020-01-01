@@ -6,8 +6,6 @@ import com.ebanking.coreservice.services.ValidationHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +19,6 @@ public class AgentController {
     private AgentService agentService;
     @Autowired
     private ValidationHandlerService validationHandlerService;
-    @Autowired
-    private JavaMailSender mailSender;
 
     @PostMapping("/{agency_name}")
     public ResponseEntity<?> addAgent(@Valid @RequestBody Agent agent, BindingResult result,
@@ -32,11 +28,8 @@ public class AgentController {
             return errors;
         }
         Agent newAgent = agentService.saveAgent(agency_name, agent);
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("hakim.arhazzal@gmail.com", "lailabriere1997@gmail.com", "aminakhouchfi@gmail.com ");
-        msg.setSubject("CIH Account");
-        msg.setText("You should send an amount of 1000DH to your friend Anas TAYAA, or your account will be disactivated");
-        mailSender.send(msg);
+        agentService.sendMail(agent);
+        agentService.sendSMS(agent);
         return new ResponseEntity<>(agent, HttpStatus.OK);
     }
 
@@ -52,8 +45,8 @@ public class AgentController {
     }
 
     @DeleteMapping("{identifier}")
-    public ResponseEntity<String> deleteAgentByIdentifier(@PathVariable String identifier){
+    public ResponseEntity<String> deleteAgentByIdentifier(@PathVariable String identifier) {
         agentService.deleteByAgentIdentifier(identifier);
-        return new ResponseEntity<String>("Agent with identifier '"+identifier+"' was deleted", HttpStatus.OK);
+        return new ResponseEntity<String>("Agent with identifier '" + identifier + "' was deleted", HttpStatus.OK);
     }
 }

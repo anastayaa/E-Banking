@@ -23,4 +23,10 @@ public class CustomeResponseEntityExceptionHandler extends ResponseEntityExcepti
         AgentEmailExceptionResponse response = new AgentEmailExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleCustomerEmailException(CustomerEmailException ex, WebRequest request) {
+        CustomerEmailExceptionResponse response = new CustomerEmailExceptionResponse(ex.getLocalizedMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }
