@@ -1,5 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
+import store from  './store';
+import {Provider} from 'react-redux';
 import './App.css';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +16,7 @@ import AddAgency from './components/Project/Admin/AddAgency';
 
 function App() {
   return (
+  <Provider store={store}>
   <div className="App">
   <Router>
   <Header/>
@@ -25,6 +28,7 @@ function App() {
   <Route exact path="/login" component={Login} />
   </Router>
   </div>
+  </Provider>
   );
 }
 

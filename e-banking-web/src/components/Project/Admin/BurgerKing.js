@@ -10,10 +10,10 @@ class BurgerKing extends React.Component {
   render () {
     
     return (
-        <div class="menu-wrap">
-        <input type="checkbox" class="toggler"/>
-        <div class="hamburger"><div></div></div>
-        <div class="menu">
+        <div className="menu-wrap">
+        <input type="checkbox" className="toggler"/>
+        <div className="hamburger"><div></div></div>
+        <div className="menu">
           <div>
             <div>
               <ul>
