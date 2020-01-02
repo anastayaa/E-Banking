@@ -1,19 +1,19 @@
 import axios from "axios";
 import { 
-        GET_AGENCIES,
-        GET_AGENCY,
+        GET_AGENTS,
+        GET_AGENT,
         LOCATION_CHANGE,
         GET_ERRORS 
  } from "../types";
 
-export const addAgency=(agency,history)=>async dispatch=>{
+export const addAgent=(agent,agency_name,history)=>async dispatch=>{
     try{
-        const res =await axios.post("http://localhost:8080/api/agency",agency)
+        const res =await axios.post(`http://localhost:8080/api/agent/${agency_name}`,agent)
         dispatch({
           type:LOCATION_CHANGE,
           payload:history.location.pathname
         })
-        history.push("/agencyDashboard")
+        history.push("/agentDashboard")
       }catch (err) {
         dispatch({
           type: GET_ERRORS,
@@ -26,11 +26,11 @@ export const addAgency=(agency,history)=>async dispatch=>{
       }
 }
 
-export const getAgency=(agency_name)=>async dispatch=>{
+export const getAgent=(identifier)=>async dispatch=>{
     
-  const res =await axios.get(`http://localhost:8080/api/agency/${agency_name}`)
+  const res =await axios.get(`http://localhost:8080/api/agency/${identifier}`)
   dispatch({
-      type:GET_AGENCY,
+      type:GET_AGENT,
       payload:res.data
   })
   dispatch({
@@ -40,13 +40,12 @@ export const getAgency=(agency_name)=>async dispatch=>{
 
 }
 
-export const getAgencies=()=>async dispatch=>{
+export const getAgents=()=>async dispatch=>{
     
-  const res =await axios.get("http://localhost:8080/api/agency/all")
+  const res =await axios.get("http://localhost:8080/api/agent/all")
   dispatch({
-      type:GET_AGENCIES,
+      type:GET_AGENTS,
       payload:res.data
   })
 
 }
-

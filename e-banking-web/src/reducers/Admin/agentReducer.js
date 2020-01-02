@@ -1,26 +1,26 @@
 import { 
-    GET_AGENCIES,
-    GET_AGENCY
+    GET_AGENTS,
+    GET_AGENT
 } from "../../actions/types";
 
 
 const initialState={
-    agencies:[],
-    agency:{}
+    agents:[],
+    agent:{}
 
 }
 
 export default function(state=initialState,action){
     switch (action.type) {
-        case GET_AGENCIES:
+        case GET_AGENTS:
             
             return{
-                ...state,agencies:action.payload
+                ...state,agents:action.payload
             };
-            case GET_AGENCY:
+            case GET_AGENT:
             
                 return{
-                    ...state,agency:action.payload
+                    ...state,agent:action.payload
                 };
         default:
             return state;

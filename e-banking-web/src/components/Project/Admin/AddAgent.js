@@ -1,11 +1,52 @@
 import React, { Component } from 'react';
-/* import PropTypes from 'prop-types';
+import {getAgencies} from '../../../actions/Admin/agencyActions';
+import {addAgent} from '../../../actions/Admin/agentActions';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getAccounts,getAccount} from '../../actions/accountActions';
-import {createDemand} from '../../actions/demandActions';*/
 import classnames from "classnames"; 
 //import "react-notifications-component/dist/theme.css";
 class AddAgent extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      motif: "",
+      status: "registred",
+      type:"",
+      compte: {'test':true},
+      errors: {}
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+       componentDidMount() {
+        this.props.getAccounts();
+      }
+      componentWillReceiveProps(nextProps){
+        if (nextProps.errors) {
+          this.setState({ errors: nextProps.errors });
+        }
+      }
+
+      onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+        if(e.target.name==="compte")
+        this.props.getAccount(e.target.value);
+       // console.log(e.target.name);
+      }
+      onSubmit(e) {
+        e.preventDefault();
+        const newDemand = {
+          motif: this.state.motif,
+          status: this.state.status,
+          type:this.state.type,
+          compte: JSON.parse(this.state.compte),
+        };
+         this.props.createDemand(newDemand,this.props.history); 
+      }
     
       render() {
     
