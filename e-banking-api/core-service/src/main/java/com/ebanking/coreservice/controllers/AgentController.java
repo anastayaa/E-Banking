@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/agent")
+@CrossOrigin
 public class AgentController {
 
     @Autowired
