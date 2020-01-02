@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/agent")
+@CrossOrigin
 public class AgentController {
 
     @Autowired
@@ -28,8 +29,6 @@ public class AgentController {
             return errors;
         }
         Agent newAgent = agentService.saveAgent(agency_name, agent);
-        agentService.sendMail(agent);
-        agentService.sendSMS(agent);
         return new ResponseEntity<>(agent, HttpStatus.OK);
     }
 
