@@ -15,11 +15,21 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
-  } from '@ionic/react';
-import { book, build, colorFill, grid } from 'ionicons/icons';
-import React from 'react';
-import './Home.css';
+  IonToolbar,
+  IonText
+} from "@ionic/react";
+import {
+  book,
+  build,
+  colorFill,
+  grid,
+  card,
+  wallet,
+  stats,
+  phonePortrait
+} from "ionicons/icons";
+import React from "react";
+import "./Home.css";
 
 const HomePage: React.FC = () => {
   return (
@@ -29,43 +39,40 @@ const HomePage: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>CIH BANK</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonCard className="welcome-card">
-          <img src="/assets/shapes.svg" alt=""/>
+          <img src="/assets/cih.jpeg" alt="" />
           <IonCardHeader>
-            <IonCardSubtitle>Get Started</IonCardSubtitle>
-            <IonCardTitle>Welcome to Ionic</IonCardTitle>
+            <IonCardSubtitle>La banque CIH</IonCardSubtitle>
+            <IonCardTitle>Bienvenue chez CIH BANK</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <p>
-              Now that your app has been created, you'll want to start building out features and
-              components. Check out some of the resources below for next steps.
-            </p>
+            <p>La banque de demain dès aujourd'hui</p>
           </IonCardContent>
         </IonCard>
 
-        <IonList lines="none">
+        <IonList lines="full">
           <IonListHeader>
-            <IonLabel>Resources</IonLabel>
+            <IonLabel>ANAS TAYAA 256566666***67888</IonLabel>
+            <IonIcon slot="start" icon={phonePortrait}></IonIcon>
           </IonListHeader>
-          <IonItem href="https://ionicframework.com/docs/" target="_blank">
-            <IonIcon slot="start" color="medium" icon={book} />
-            <IonLabel>Ionic Documentation</IonLabel>
+          <IonItem>
+            <IonIcon slot="start" color="primary" icon={wallet} />
+            <IonLabel>Mes Comptes</IonLabel>
+            <IonText>Monsieur ANAS TAYAA</IonText>
           </IonItem>
-          <IonItem href="https://ionicframework.com/docs/building/scaffolding" target="_blank">
-            <IonIcon slot="start" color="medium" icon={build} />
-            <IonLabel>Scaffold Out Your App</IonLabel>
+          <IonItem>
+            <IonIcon slot="start" color="primary" icon={card} />
+            <IonLabel>Mes Cartes</IonLabel>
+            <IonText>C-JEUNE EMV MULT</IonText>
           </IonItem>
-          <IonItem href="https://ionicframework.com/docs/layout/structure" target="_blank">
-            <IonIcon slot="start" color="medium" icon={grid} />
-            <IonLabel>Change Your App Layout</IonLabel>
-          </IonItem>
-          <IonItem href="https://ionicframework.com/docs/theming/basics" target="_blank">
-            <IonIcon slot="start" color="medium" icon={colorFill} />
-            <IonLabel>Theme Your App</IonLabel>
+          <IonItem>
+            <IonIcon slot="start" color="primary" icon={stats} />
+            <IonLabel>Statisiques</IonLabel>
+            <IonText>Débit: 6000.00 MAD</IonText>
           </IonItem>
         </IonList>
       </IonContent>

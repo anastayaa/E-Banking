@@ -1,5 +1,7 @@
 {
   "name": "e-banking-mobile",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }
