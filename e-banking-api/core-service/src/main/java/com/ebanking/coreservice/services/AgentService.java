@@ -6,9 +6,6 @@ import com.ebanking.coreservice.models.Agency;
 import com.ebanking.coreservice.models.Agent;
 import com.ebanking.coreservice.repositories.AgencyRepository;
 import com.ebanking.coreservice.repositories.AgentRepository;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -39,7 +36,6 @@ public class AgentService {
             agent.setPassword(agent.getIdentifier() + "" + new Random().nextInt());
             Agent newAgent = agentRepository.save(agent);
             this.sendMail(newAgent);
-            this.sendSMS(newAgent);
             return newAgent;
         } catch (Exception ex) {
             throw new AgentEmailException("Agent with email '" + agent.getEmail() + "' already exist");
@@ -76,21 +72,4 @@ public class AgentService {
         mailSender.send(msg);
     }
 
-    public void sendSMS(Agent agent) {
-        String login = agent.getLogin();
-        String password = agent.getPassword();
-        String text = "Your login account: " + login + ", Your password account: " + password;
-
-        String ACCOUNT_SID =
-                "AC1c8ea76f6298028ccfac6f902df5a040";
-        String AUTH_TOKEN =
-                "5bb520d4094fb3fba784ab7e521e5d05";
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        Message message = Message
-                .creator(new PhoneNumber("+212673163363"), // to
-                        new PhoneNumber("+18452088441"), // from
-                        text
-                )
-                .create();
-    }
 }

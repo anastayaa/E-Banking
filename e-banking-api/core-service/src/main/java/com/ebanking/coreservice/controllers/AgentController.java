@@ -29,8 +29,6 @@ public class AgentController {
             return errors;
         }
         Agent newAgent = agentService.saveAgent(agency_name, agent);
-        agentService.sendMail(agent);
-        agentService.sendSMS(agent);
         return new ResponseEntity<>(agent, HttpStatus.OK);
     }
 

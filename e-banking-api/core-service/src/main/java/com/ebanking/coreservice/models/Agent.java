@@ -34,11 +34,9 @@ public class Agent {
     @Size(max = 50, message = "email is not valid")
     @Email
     private String email;
-    @NotBlank(message = "The account login can't be empty")
     @Column(unique = true, nullable = false)
     @Size(min = 8, max = 50)
     private String login;
-    @NotBlank(message = "The account password can't be empty")
     @Column(nullable = false)
     @Size(min = 8, max = 50)
     private String password;
