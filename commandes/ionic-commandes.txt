@@ -3,3 +3,25 @@ npm install -g ionic
 ionic start myApp
 
 ionic serve
+
+config java:
+
+readlink -f $(which java)
+
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre/"
+
+sudo update-alternatives --config java
+
+export ANDROID_SDK_ROOT=$HOME/Android/sdk
+
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+
+ionic duild 
+
+ionic capacitor add android
+
+ionic capacitor copy android
