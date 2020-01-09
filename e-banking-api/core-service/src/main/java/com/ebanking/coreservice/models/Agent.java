@@ -50,7 +50,7 @@ public class Agent {
     private List<Contract> contracts = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agency_id", nullable = false)
-    @JsonIgnore
+   // @JsonIgnore
     private Agency agency;
 
     public Agent() {

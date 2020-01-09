@@ -1,20 +1,78 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
-//import ListDemand from './ListDemand';
-//import PropTypes from 'prop-types';
-//import {connect} from 'react-redux';
-//import {getAccounts} from '../../actions/accountActions';
-//import {getDemands,getDemandsByConditions} from '../../actions/demandActions';
-//import ReactNotification from "react-notifications-component";
+import ListAgencies from '../Admin/ListAgencies';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {getAgencies,getAgenciesByConditions} from '../../../actions/Admin/agencyActions';
+import ReactNotification from "react-notifications-component";
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 class AgencyDashboard extends Component {
 
+  constructor() {
+    super();
 
+     this.state = {
+      name:"",
+      address:""
+    }; 
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+
+    this.props.getAgencies(); 
+     const location=this.props.location;
+    if(location==="/addagency") this.addNotification()
+    else if(location!=="") this.editNotification() 
+  } 
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.getAgenciesByConditions(this.state);
+  }
+
+ addNotification=()=>{
+    store.addNotification({
+     title: "Success",
+     message: "agency created succefully!",
+     type: "success",
+     insert: "top",
+     container: "top-center",
+     animationIn: ["animated", "fadeIn"],
+     animationOut: ["animated", "fadeOut"],
+     dismiss: { duration: 2000 },
+     dismissable: { click:true },
+
+   })
+ }
+  editNotification=()=>{
+  store.addNotification({
+   title: "Success",
+   message: "agency updated succefully!",
+   type: "success",
+   insert: "top",
+   container: "top-center",
+   animationIn: ["animated", "fadeIn"],
+   animationOut: ["animated", "fadeOut"],
+   dismiss: { duration: 2000 },
+   dismissable: { click:true },
+
+ })
+} 
     render() {
-        
+
+      const {agencies}=this.props.agency;
         return (
             <div>
             <div className="agent">
+            <ReactNotification/>
               <div className="container">
                 <div className="row">
                   <div className="col-md-12 m-auto">
@@ -23,27 +81,24 @@ class AgencyDashboard extends Component {
                     <form onSubmit={this.onSubmit}>
                     <div className="row">
                       <div className="col">
-                           <select name="numCompte" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
-                             <option value="-1" disabled>Agency name</option>
-                             <option value="CIH">CIH</option>
-                             <option value="BP">Banque populaire</option>
-                             <option value="SG">Societé génerale</option>
-                                {//accounts.map(account => (
-                               //<option value={account.numCompte}  key={account.id}>{account.numCompte}</option>
-                              // ))
+                           <select name="name" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
+                           <option value={'-1'}  disabled>Agency name</option>
+                           {agencies.map(agency => (
+                              <option value={agency.name}  key={agency.id}>{agency.name}</option>
+                              ))
                               }
                     </select>
                       </div>
                       <div className="col">
-                        <input
-                          className="form-control form-control-lg"
-                          placeholder="City"
-                          name="city"
-                          type="text" 
-                         // onChange={this.onChange}
-                        //value={this.state.date1}
-                        />
-                      </div>
+                      <select name="address" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
+                      <option value="-1" disabled>Address</option>
+                         {agencies.map(agency => (
+                        <option value={agency.address}  key={agency.id}>{agency.address
+                        }</option>
+                       ))
+                       }
+                       </select>
+                       </div>
                       </div>
                       <div className="row justify-content-end">
                       <div className="col-md-2">
@@ -63,7 +118,7 @@ class AgencyDashboard extends Component {
                       <Link className="nav-link" to="/addagency">
                       <button
                       className="btn text-white btn-block mt-4"
-                      //type="submit"
+                      type="submit"
                       style={{backgroundColor:'#EB5C09'}}
                     >
                     Add Agency
@@ -72,7 +127,12 @@ class AgencyDashboard extends Component {
                       </div>
                       </div>
                       <br/>
-
+                      <div className="row">
+                      <div className="col">
+                      
+                      <ListAgencies agencies={agencies} history={this.props.history}/>
+                      </div>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -83,6 +143,14 @@ class AgencyDashboard extends Component {
     }
 }
 
+AgencyDashboard.propTypes = {
+  getAgencies: PropTypes.func.isRequired,
+  getAgenciesByConditions:PropTypes.func.isRequired
+};
 
-  
-  export default AgencyDashboard;
+const mapStateToProps = state => ({
+  agency: state.agency,
+  location:state.location.previousLocation
+});
+
+export default connect(mapStateToProps,{getAgencies,getAgenciesByConditions})(AgencyDashboard);

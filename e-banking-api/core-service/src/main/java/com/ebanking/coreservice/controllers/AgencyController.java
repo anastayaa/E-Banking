@@ -41,6 +41,11 @@ public class AgencyController {
         return agencyService.findAllAgenciesByAddress(address);
     }
 
+    @GetMapping("/names/{agency_name}")
+    public Iterable<Agency> getAllAgenciesByName(@PathVariable String name) {
+        return agencyService.findAllAgenciesByName(name);
+    }
+
     @GetMapping("/{agency_name}")
     public ResponseEntity<?> getAgencyByName(@PathVariable String agency_name) {
         Agency agency = agencyService.findAgencyByName(agency_name);

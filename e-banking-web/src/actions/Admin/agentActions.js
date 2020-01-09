@@ -6,14 +6,26 @@ import {
         GET_ERRORS 
  } from "../types";
 
-export const addAgent=(agent,agency_name,history)=>async dispatch=>{
+
+ export const deleteAgent=(identifier,history)=>async dispatch=>{
+  //console.log(id)
+  const res =await axios.delete(`http://localhost:8080/api/agent/${identifier}`)
+  const res1 =await axios.get("http://localhost:8080/api/agent/all")
+  dispatch({
+    type:GET_AGENTS,
+    payload:res1.data
+})
+history.push("/agentDashboard")
+}
+
+export const addAgent=(agent,history)=>async dispatch=>{
     try{
-        const res =await axios.post(`http://localhost:8080/api/agent/${agency_name}`,agent)
-        dispatch({
+        const res =await axios.post("http://localhost:8080/api/agent",agent)
+         dispatch({
           type:LOCATION_CHANGE,
           payload:history.location.pathname
-        })
-        history.push("/agentDashboard")
+        }) 
+      history.push("/agentDashboard")
       }catch (err) {
         dispatch({
           type: GET_ERRORS,
@@ -28,7 +40,7 @@ export const addAgent=(agent,agency_name,history)=>async dispatch=>{
 
 export const getAgent=(identifier)=>async dispatch=>{
     
-  const res =await axios.get(`http://localhost:8080/api/agency/${identifier}`)
+  const res =await axios.get(`http://localhost:8080/api/agent/${identifier}`)
   dispatch({
       type:GET_AGENT,
       payload:res.data

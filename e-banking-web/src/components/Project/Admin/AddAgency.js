@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {addAgency} from '../../../actions/Admin/agencyActions';
 import classnames from "classnames"; 
-//import "react-notifications-component/dist/theme.css";
+import "react-notifications-component/dist/theme.css";
 class AddAgency extends Component {
     
   constructor() {

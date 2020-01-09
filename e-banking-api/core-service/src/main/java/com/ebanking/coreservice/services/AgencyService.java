@@ -32,6 +32,14 @@ public class AgencyService {
         return agencies;
     }
 
+    public Iterable<Agency> findAllAgenciesByName(String name) {
+        Iterable<Agency> agencies = agencyRepository.findByNameLike(name);
+        if (agencies == null) {
+            throw new AgencyNameException("Agency with name '" + name + "' not found");
+        }
+        return agencies;
+    }
+
     public Agency findAgencyByName(String agencyName) {
         Agency agency = agencyRepository.findByName(agencyName);
         if (agency == null) {

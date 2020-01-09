@@ -10,4 +10,5 @@ public interface AgencyRepository extends CrudRepository<Agency, Long> {
     Agency findByName(String name);
 
     Iterable<Agency> findByAddressLike(String address);
+    Iterable<Agency> findByNameLike(String name);
 }

@@ -21,15 +21,14 @@ public class AgentController {
     @Autowired
     private ValidationHandlerService validationHandlerService;
 
-    @PostMapping("/{agency_name}")
-    public ResponseEntity<?> addAgent(@Valid @RequestBody Agent agent, BindingResult result,
-                                      @PathVariable String agency_name) {
+    @PostMapping
+    public ResponseEntity<?> addAgent(@Valid @RequestBody Agent agent, BindingResult result) {
         ResponseEntity<?> errors = validationHandlerService.getValidationErrors(result);
         if (errors != null) {
             return errors;
         }
-        Agent newAgent = agentService.saveAgent(agency_name, agent);
-        return new ResponseEntity<>(agent, HttpStatus.OK);
+        Agent newAgent = agentService.saveAgent(agent);
+        return new ResponseEntity<>(newAgent, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")

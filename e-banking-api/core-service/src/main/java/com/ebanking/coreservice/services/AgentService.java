@@ -23,23 +23,19 @@ public class AgentService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public Agent saveAgent(String agencyName, Agent agent) {
-        try {
-            Agency agency = agencyRepository.findByName(agencyName);
-            if (agency == null) {
-                throw new AgencyNameException("Agency with name '" + agencyName + "' not found");
-            }
+    public Agent saveAgent(Agent agent) {
+
+            Agency agency = agencyRepository.findByName(agent.getAgency().getName());
             agent.setAgency(agency);
             String[] helper = agent.getEmail().split("@");
             agent.setIdentifier(agent.getFirstName() + "-" + helper[0]);
             agent.setLogin(agent.getIdentifier());
             agent.setPassword(agent.getIdentifier() + "" + new Random().nextInt());
+
             Agent newAgent = agentRepository.save(agent);
+
             this.sendMail(newAgent);
             return newAgent;
-        } catch (Exception ex) {
-            throw new AgentEmailException("Agent with email '" + agent.getEmail() + "' already exist");
-        }
     }
 
     public Iterable<Agent> findAllAgent() {
