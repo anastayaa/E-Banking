@@ -23,9 +23,13 @@ public class AgentService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public Agent saveAgent(Agent agent) {
 
-            Agency agency = agencyRepository.findByName(agent.getAgency().getName());
+    public Agent saveAgent(String agencyId, Agent agent) {
+        try {
+            Agency agency = agencyRepository.findAgencyById(Long.parseLong(agencyId));
+            if (agency == null) {
+                throw new AgencyNameException("Agency with name '" + agencyId + "' not found");
+            }
             agent.setAgency(agency);
             String[] helper = agent.getEmail().split("@");
             agent.setIdentifier(agent.getFirstName() + "-" + helper[0]);
@@ -36,36 +40,39 @@ public class AgentService {
 
             this.sendMail(newAgent);
             return newAgent;
-    }
-
-    public Iterable<Agent> findAllAgent() {
-        return agentRepository.findAll();
-    }
-
-    public Agent findAgentByIdentifier(String identifier) {
-        Agent agent = agentRepository.findByIdentifier(identifier);
-        if (agent == null) {
-            throw new AgentEmailException("Agent with identifier '" + identifier + "' doesn't exist");
+        } catch (Exception ex) {
+            throw new AgentEmailException("Agent with email '" + agent.getEmail() + "' already exist");
         }
-        return agent;
     }
 
-    public void deleteByAgentIdentifier(String identifier) {
-        Agent agent = this.findAgentByIdentifier(identifier);
-        agentRepository.delete(agent);
-    }
+        public Iterable<Agent> findAllAgent () {
+            return agentRepository.findAll();
+        }
 
-    public void sendMail(Agent agent) {
-        SimpleMailMessage msg = new SimpleMailMessage();
-        String to = agent.getEmail();
-        String subject = "Agency Bank: Login and Password account";
-        String login = agent.getLogin();
-        String password = agent.getPassword();
-        String text = "Your login account: " + login + ", Your password account: " + password;
-        msg.setTo(to);
-        msg.setSubject(subject);
-        msg.setText(text);
-        mailSender.send(msg);
-    }
+        public Agent findAgentByIdentifier (String identifier){
+            Agent agent = agentRepository.findByIdentifier(identifier);
+            if (agent == null) {
+                throw new AgentEmailException("Agent with identifier '" + identifier + "' doesn't exist");
+            }
+            return agent;
+        }
 
-}
+        public void deleteByAgentIdentifier (String identifier){
+            Agent agent = this.findAgentByIdentifier(identifier);
+            agentRepository.delete(agent);
+        }
+
+        public void sendMail (Agent agent){
+            SimpleMailMessage msg = new SimpleMailMessage();
+            String to = agent.getEmail();
+            String subject = "Agency Bank: Login and Password account";
+            String login = agent.getLogin();
+            String password = agent.getPassword();
+            String text = "Your login account: " + login + ", Your password account: " + password;
+            msg.setTo(to);
+            msg.setSubject(subject);
+            msg.setText(text);
+            mailSender.send(msg);
+        }
+
+    }

@@ -8,7 +8,7 @@ import Menu from "./components/Menu";
 import Home from "./pages/Home";
 import List from "./pages/List";
 import Cart from "./pages/Card";
-import { home, list, cart, card, contact, people } from "ionicons/icons";
+import { home, list, card, contact, people, paperPlane } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -31,6 +31,7 @@ import "./theme/variables.css";
 import Beneficiary from "./pages/Beneficiary";
 import Recharge from "./pages/Recharge";
 import Contact from "./pages/Contact";
+import Virement from "./pages/Virement";
 
 const appPages: AppPage[] = [
   {
@@ -43,6 +44,7 @@ const appPages: AppPage[] = [
     url: "/home/card",
     icon: card
   },
+  { title: "Virements", url: "/home/virement", icon: paperPlane },
   {
     title: "Mes Bénéficiaires",
     url: "/home/beneficiary",
@@ -69,11 +71,7 @@ const App: React.FC = () => (
           <Route path="/home" component={Home} exact={true} />
           <Route path="/home/list" component={List} exact={true} />
           <Route path="/home/card" component={Cart} exact={true} />
-          <Route
-            path="/home/beneficiary"
-            component={Beneficiary}
-            exact={true}
-          />
+          <Route path="/home/virement" component={Virement} exact={true} />
           <Route
             path="/home/beneficiary"
             component={Beneficiary}
