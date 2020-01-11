@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AgencyRepository extends CrudRepository<Agency, Long> {
 
-    Agency findByName(String name);
+    Agency findAgencyById(Long id);
 
-    Iterable<Agency> findByAddressLike(String address);
+    Iterable<Agency> findAgenciesByCity(String city);
 }

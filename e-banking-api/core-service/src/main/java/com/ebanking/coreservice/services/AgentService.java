@@ -23,11 +23,11 @@ public class AgentService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public Agent saveAgent(String agencyName, Agent agent) {
+    public Agent saveAgent(String agencyId, Agent agent) {
         try {
-            Agency agency = agencyRepository.findByName(agencyName);
+            Agency agency = agencyRepository.findAgencyById(Long.parseLong(agencyId));
             if (agency == null) {
-                throw new AgencyNameException("Agency with name '" + agencyName + "' not found");
+                throw new AgencyNameException("Agency with name '" + agencyId + "' not found");
             }
             agent.setAgency(agency);
             String[] helper = agent.getEmail().split("@");

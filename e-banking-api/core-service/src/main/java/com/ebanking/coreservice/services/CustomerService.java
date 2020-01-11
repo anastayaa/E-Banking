@@ -1,7 +1,9 @@
 package com.ebanking.coreservice.services;
 
 import com.ebanking.coreservice.Exceptions.CustomerEmailException;
+import com.ebanking.coreservice.models.Account;
 import com.ebanking.coreservice.models.Customer;
+import com.ebanking.coreservice.repositories.AccountRepository;
 import com.ebanking.coreservice.repositories.CustomerRepository;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
@@ -19,18 +21,30 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
     private JavaMailSender mailSender;
 
     public Customer saveCustomer(Customer customer) {
         try {
             String[] helper = customer.getEmail().split("@");
-            customer.setLogin(helper[0]);
-            customer.setPassword(helper[0] + "-" + new Random().nextInt());
+            Account account = new Account();
+            Random random = new Random();
+            String accountNumber = "";
+            for (int i = 0; i < 16; i++) {
+                accountNumber += Integer.toString(random.nextInt(10));
+            }
+            account.setAccountNumber(accountNumber);
+            account.setLogin(helper[0]);
+            account.setPassword(helper[0] + "-" + random.nextInt());
             Customer newCustomer = customerRepository.save(customer);
-            this.sendMail(newCustomer);
-            this.sendSMS(newCustomer);
+            account.setCustomer(customer);
+            accountRepository.save(account);
+            this.sendMail(account);
+            this.sendSMS(account);
             return newCustomer;
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new CustomerEmailException("Customer with email '" + customer.getEmail() + "' already exist");
         }
     }
@@ -53,12 +67,12 @@ public class CustomerService {
     }
 
 
-    public void sendMail(Customer customer) {
+    public void sendMail(Account account) {
         SimpleMailMessage msg = new SimpleMailMessage();
-        String to = customer.getEmail();
+        String to = account.getCustomer().getEmail();
         String subject = "Agency Bank: Login and Password account";
-        String login = customer.getLogin();
-        String password = customer.getPassword();
+        String login = account.getLogin();
+        String password = account.getPassword();
         String text = "Your login account: " + login + ", Your password account: " + password;
         msg.setTo(to);
         msg.setSubject(subject);
@@ -66,9 +80,9 @@ public class CustomerService {
         mailSender.send(msg);
     }
 
-    public void sendSMS(Customer customer) {
-        String login = customer.getLogin();
-        String password = customer.getPassword();
+    public void sendSMS(Account account) {
+        String login = account.getLogin();
+        String password = account.getPassword();
         String text = "Your login account: " + login + ", Your password account: " + password;
 
         String ACCOUNT_SID =

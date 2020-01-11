@@ -1,7 +1,6 @@
 package com.ebanking.coreservice.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -22,12 +21,11 @@ public class Account {
     @Column(unique = true, updatable = false, nullable = false)
     private String accountNumber;
     private double balance = 0;
-    @NotBlank(message = "The account login can't be empty")
     @Column(unique = true, nullable = false)
+    @Size(min = 8, max = 50)
     private String login;
-    @NotBlank(message = "The account password can't be empty")
     @Column(nullable = false)
-    @Size(min = 8)
+    @Size(min = 8, max = 50)
     private String password;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
@@ -36,7 +34,6 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
-    @JsonIgnore
     private Customer customer;
     @OneToMany(mappedBy = "account", cascade = CascadeType.REFRESH, orphanRemoval = false)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -158,6 +155,10 @@ public class Account {
                 ", balance=" + balance +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", customer=" + customer +
+                ", cards=" + cards +
+                ", beneficiaries=" + beneficiaries +
+                ", operations=" + operations +
                 '}';
     }
 }

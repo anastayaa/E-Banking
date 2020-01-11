@@ -25,3 +25,5 @@ ionic duild
 ionic capacitor add android
 
 ionic capacitor copy android
+
+npm install axios -save

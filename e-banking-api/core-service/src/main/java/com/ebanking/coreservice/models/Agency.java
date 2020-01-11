@@ -18,9 +18,13 @@ public class Agency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "The agency name can't be empty")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @Size(max = 50)
     private String name;
+    @NotBlank(message = "The agency city can't be empty")
+    @Column(nullable = false)
+    @Size(max = 50)
+    private String city;
     @NotBlank(message = "The address can't be empty")
     @Column(nullable = false)
     @Size(max = 100, message = "address is not valid")
@@ -56,6 +60,14 @@ public class Agency {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getAddress() {
@@ -113,10 +125,12 @@ public class Agency {
         return "Agency{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", agents=" + agents +
                 '}';
     }
 }

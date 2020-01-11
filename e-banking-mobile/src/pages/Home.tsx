@@ -18,20 +18,22 @@ import {
   IonToolbar,
   IonText
 } from "@ionic/react";
-import {
-  book,
-  build,
-  colorFill,
-  grid,
-  card,
-  wallet,
-  stats,
-  phonePortrait
-} from "ionicons/icons";
+import { card, wallet, stats } from "ionicons/icons";
 import React from "react";
 import "./Home.css";
+import { IAccount } from "../models/IAccount";
+import { GetAccountById } from "../actions/AccountActions";
 
 const HomePage: React.FC = () => {
+  const [account, setAccount] = React.useState<IAccount>();
+
+  React.useEffect(() => {
+    GetAccountById(1).then(data => {
+      setAccount(data);
+      console.log(account);
+    });
+  }, []);
+
   return (
     <IonPage>
       <IonHeader>
@@ -56,8 +58,12 @@ const HomePage: React.FC = () => {
 
         <IonList lines="full">
           <IonListHeader>
-            <IonLabel>ANAS TAYAA 256566666***67888</IonLabel>
-            <IonIcon slot="start" icon={phonePortrait}></IonIcon>
+            {account !== undefined && (
+              <IonLabel>
+                {account.customer.firstName} {account.customer.lastName}{" "}
+                {account.accountNumber}
+              </IonLabel>
+            )}
           </IonListHeader>
           <IonItem>
             <IonIcon slot="start" color="primary" icon={wallet} />

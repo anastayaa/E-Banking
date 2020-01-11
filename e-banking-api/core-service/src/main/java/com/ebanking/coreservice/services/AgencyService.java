@@ -24,24 +24,24 @@ public class AgencyService {
         return agencyRepository.findAll();
     }
 
-    public Iterable<Agency> findAllAgenciesByAddress(String address) {
-        Iterable<Agency> agencies = agencyRepository.findByAddressLike("%" + address + "%");
+    public Iterable<Agency> findAllAgenciesByCity(String city) {
+        Iterable<Agency> agencies = agencyRepository.findAgenciesByCity(city);
         if (agencies == null) {
-            throw new AgencyNameException("Agency with address '" + address + "' not found");
+            throw new AgencyNameException("Agency with address '" + city + "' not found");
         }
         return agencies;
     }
 
-    public Agency findAgencyByName(String agencyName) {
-        Agency agency = agencyRepository.findByName(agencyName);
+    public Agency findAgencyById(String id) {
+        Agency agency = agencyRepository.findAgencyById(Long.parseLong(id));
         if (agency == null) {
-            throw new AgencyNameException("Agency with name '" + agencyName + "' not found");
+            throw new AgencyNameException("Agency with name '" + id + "' not found");
         }
         return agency;
     }
 
-    public void deleteAgencyByName(String agencyName) {
-        Agency agency = this.findAgencyByName(agencyName);
+    public void deleteAgencyById(String id) {
+        Agency agency = this.findAgencyById(id);
         agencyRepository.delete(agency);
     }
 }

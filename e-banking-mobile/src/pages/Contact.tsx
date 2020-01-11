@@ -5,9 +5,16 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonList,
+  IonListHeader,
+  IonLabel,
+  IonItem,
+  IonIcon,
+  IonText
 } from "@ionic/react";
 import React from "react";
+import { person } from "ionicons/icons";
 
 const Contact: React.FC = () => {
   return (
@@ -21,7 +28,17 @@ const Contact: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <h1>Contactez nous</h1>
+        <IonList>
+          <IonListHeader>
+            <IonLabel color="danger">Mon Conseiller</IonLabel>
+          </IonListHeader>
+          <IonItem>
+            <IonIcon slot="start" icon={person} color="primary"></IonIcon>
+            <IonTitle>Soumia Agent</IonTitle>
+            <IonLabel>0524625262</IonLabel>
+            <IonText>soumia.agent@cihbank.ma</IonText>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   );

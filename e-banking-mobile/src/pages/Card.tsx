@@ -8,12 +8,10 @@ import {
   IonToolbar,
   IonCard,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
   IonList,
   IonListHeader,
-  IonIcon,
   IonLabel,
   IonItem,
   IonText
@@ -43,7 +41,6 @@ const Card: React.FC = () => {
         </IonCard>
         <IonList lines="full">
           <IonListHeader>
-            <IonIcon slot="start"></IonIcon>
             <IonLabel color="danger">Opérations</IonLabel>
           </IonListHeader>
           <IonItem>
