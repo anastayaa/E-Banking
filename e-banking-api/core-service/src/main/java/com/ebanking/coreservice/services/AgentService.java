@@ -1,6 +1,6 @@
 package com.ebanking.coreservice.services;
 
-import com.ebanking.coreservice.Exceptions.AgencyNameException;
+import com.ebanking.coreservice.Exceptions.AgencyIdException;
 import com.ebanking.coreservice.Exceptions.AgentEmailException;
 import com.ebanking.coreservice.models.Agency;
 import com.ebanking.coreservice.models.Agent;
@@ -27,7 +27,7 @@ public class AgentService {
         try {
             Agency agency = agencyRepository.findAgencyById(Long.parseLong(agencyId));
             if (agency == null) {
-                throw new AgencyNameException("Agency with name '" + agencyId + "' not found");
+                throw new AgencyIdException("Agency with name '" + agencyId + "' not found");
             }
             agent.setAgency(agency);
             String[] helper = agent.getEmail().split("@");

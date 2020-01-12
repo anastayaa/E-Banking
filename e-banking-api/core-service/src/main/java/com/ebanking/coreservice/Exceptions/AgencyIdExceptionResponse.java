@@ -1,10 +1,10 @@
 package com.ebanking.coreservice.Exceptions;
 
-public class AgencyNameExceptionResponse {
+public class AgencyIdExceptionResponse {
 
     private String agency;
 
-    public AgencyNameExceptionResponse(String agencyResponse) {
+    public AgencyIdExceptionResponse(String agencyResponse) {
         this.agency = agencyResponse;
     }
 

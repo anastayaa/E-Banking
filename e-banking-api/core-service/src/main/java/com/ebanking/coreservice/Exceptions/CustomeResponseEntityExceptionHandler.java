@@ -13,8 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleAgencyNameException(AgencyNameException ex, WebRequest request) {
-        AgencyNameExceptionResponse response = new AgencyNameExceptionResponse(ex.getMessage());
+    public final ResponseEntity<Object> handleAgencyNameException(AgencyIdException ex, WebRequest request) {
+        AgencyIdExceptionResponse response = new AgencyIdExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

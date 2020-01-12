@@ -44,21 +44,20 @@ public class CustomerService {
             this.sendSMS(account);
             return newCustomer;
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new CustomerEmailException("Customer with email '" + customer.getEmail() + "' already exist");
         }
     }
 
-    public Customer findCustomerByCin(String cin) {
-        Customer customer = customerRepository.findByCin(cin);
+    public Customer findCustomerById(String id) {
+        Customer customer = customerRepository.findCustomerById(Long.parseLong(id));
         if (customer == null) {
-            throw new CustomerEmailException("Customer with cin '" + cin + "' doesn't exist");
+            throw new CustomerEmailException("Customer with cin '" + id + "' doesn't exist");
         }
         return customer;
     }
 
-    public void deleteCustomerByCin(String cin) {
-        Customer customer = this.findCustomerByCin(cin);
+    public void deleteCustomerById(String id) {
+        Customer customer = this.findCustomerById(id);
         customerRepository.delete(customer);
     }
 

@@ -36,15 +36,15 @@ public class CustomerController {
         return customerService.findAllCustomers();
     }
 
-    @GetMapping("/{cin}")
-    public ResponseEntity<Customer> getCustomerByCin(@PathVariable String cin) {
-        Customer customer = customerService.findCustomerByCin(cin);
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
+        Customer customer = customerService.findCustomerById(id);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{cin}")
-    public ResponseEntity<String> deleteCustomerByCin(@PathVariable String cin) {
-        customerService.deleteCustomerByCin(cin);
-        return new ResponseEntity<String>("Customer with cin '" + cin + "' was deleted", HttpStatus.OK);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomerByCin(@PathVariable String id) {
+        customerService.deleteCustomerById(id);
+        return new ResponseEntity<String>("Customer with cin '" + id + "' was deleted", HttpStatus.OK);
     }
 }
