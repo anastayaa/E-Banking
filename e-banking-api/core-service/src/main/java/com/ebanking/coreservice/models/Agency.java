@@ -1,6 +1,7 @@
 package com.ebanking.coreservice.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -39,8 +40,9 @@ public class Agency {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "agency", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = false)
+    @OneToMany(mappedBy = "agency", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     private List<Agent> agents = new ArrayList<>();
 
     public Agency() {

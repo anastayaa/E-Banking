@@ -32,15 +32,16 @@ public class AgencyService {
         return agencies;
     }
 
-    public Agency findAgencyById(String id) {
-        Agency agency = agencyRepository.findAgencyById(Long.parseLong(id));
+
+    public Agency findAgencyById(long id) {
+        Agency agency = agencyRepository.findAgencyById(id);
         if (agency == null) {
             throw new AgencyIdException("Agency with name '" + id + "' not found");
         }
         return agency;
     }
 
-    public void deleteAgencyById(String id) {
+    public void deleteAgencyById(long id) {
         Agency agency = this.findAgencyById(id);
         agencyRepository.delete(agency);
     }

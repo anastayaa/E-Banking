@@ -37,18 +37,20 @@ public class AgencyController {
     }
 
     @GetMapping("/all/{city}")
-    public Iterable<Agency> getAllAgenciesByAddress(@PathVariable String city) {
+    public Iterable<Agency> getAllAgenciesByCity(@PathVariable String city) {
         return agencyService.findAllAgenciesByCity(city);
     }
 
+
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAgencyById(@PathVariable String id) {
+    public ResponseEntity<?> getAgencyById(@PathVariable long id) {
         Agency agency = agencyService.findAgencyById(id);
         return new ResponseEntity<Agency>(agency, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAgencyByName(@PathVariable String id) {
+    public ResponseEntity<String> deleteAgencyById(@PathVariable long id) {
         agencyService.deleteAgencyById(id);
         return new ResponseEntity<String>("Agency with name '" + id + "' was deleted", HttpStatus.OK);
     }
