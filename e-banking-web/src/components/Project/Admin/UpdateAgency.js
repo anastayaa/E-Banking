@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
  import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {addAgency,getAgencyByName} from '../../../actions/Admin/agencyActions';
+import {addAgency,getAgencyById} from '../../../actions/Admin/agencyActions';
 import classnames from "classnames"; 
 
 class UpdateAgency extends Component {
@@ -26,12 +26,14 @@ class UpdateAgency extends Component {
         const {
           id,
           name,
+          city,
           address,
           phone
         } = nextProps.agency;
         this.setState({
             id,
             name,
+            city,
             address,
             phone
           });
@@ -39,9 +41,9 @@ class UpdateAgency extends Component {
     }  
     componentDidMount()
     {
-     const { name } = this.props.match.params;
+     const { id } = this.props.match.params;
      //console.log(JSON.stringify(this.props.agency))
-     this.props.getAgencyByName(name,this.props.history);
+     this.props.getAgencyById(id,this.props.history);
     }
     onChange(e) {
       this.setState({ [e.target.name]: e.target.value });
@@ -51,6 +53,7 @@ class UpdateAgency extends Component {
       const newAgency = {
         id:this.state.id,
         name: this.state.name,
+        city:this.state.city,
         address: this.state.address,
         phone:this.state.phone,
       };
@@ -87,6 +90,25 @@ class UpdateAgency extends Component {
                           />
                           {errors.name && (
                             <div className="invalid-feedback">{errors.name}</div>
+                          )}
+                        </div>
+                        </div>
+                        <br/><br/>
+                        <div className="row">
+                      <div className="col">
+                          <input
+                            className="form-control form-control-lg"
+                            type="text"
+                            className={classnames("form-control form-control-lg", {
+                              "is-invalid": errors.name
+                            })}
+                            placeholder="City"
+                            name="city"
+                            value={this.state.city}
+                            onChange={this.onChange}
+                          />
+                          {errors.city && (
+                            <div className="invalid-feedback">{errors.city}</div>
                           )}
                         </div>
                         </div>
@@ -148,7 +170,7 @@ class UpdateAgency extends Component {
       UpdateAgency.propTypes = {
         agency: PropTypes.object.isRequired,
         addAgency: PropTypes.func.isRequired,
-        getAgencyByName: PropTypes.func.isRequired,
+        getAgencyById: PropTypes.func.isRequired,
         errors: PropTypes.object.isRequired,
       };
   
@@ -159,6 +181,6 @@ class UpdateAgency extends Component {
         errors: state.errors
       });
       
-      export default connect(mapStateToProps,{ addAgency,getAgencyByName } )(UpdateAgency); 
+      export default connect(mapStateToProps,{ addAgency,getAgencyById } )(UpdateAgency); 
 
 

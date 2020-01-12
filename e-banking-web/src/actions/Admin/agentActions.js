@@ -1,6 +1,7 @@
 import axios from "axios";
 import { 
         GET_AGENTS,
+        GET_AGENTS_CITY,
         GET_AGENT,
         LOCATION_CHANGE,
         GET_ERRORS 
@@ -60,4 +61,20 @@ export const getAgents=()=>async dispatch=>{
       payload:res.data
   })
 
+}
+
+export const getAgentsByConditions=(conditions)=>async dispatch=>{
+    
+  let res;
+  let agency_city=conditions.agency_city;
+
+     if(agency_city!=="")
+     {
+       res =await axios.get(`http://localhost:8080/api/agent/agency/${agency_city}`)
+       dispatch({
+         type:GET_AGENTS_CITY,
+          payload:res.data
+        })
+      }
+  
 }

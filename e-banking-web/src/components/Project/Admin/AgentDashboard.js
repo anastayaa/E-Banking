@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ListAgents from '../Admin/ListAgents';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getAgents} from '../../../actions/Admin/agentActions';
+import {getAgents,getAgentsByConditions} from '../../../actions/Admin/agentActions';
 import {getAgencies} from '../../../actions/Admin/agencyActions';
 //import {getDemands,getDemandsByConditions} from '../../actions/demandActions';
 import ReactNotification from "react-notifications-component";
@@ -15,16 +15,21 @@ class AgentDashboard extends Component {
   constructor() {
     super();
 
-    /* this.state = {
-      numCompte:"",
-      status:"",
-      date1:"",
-      date2:""
+    this.state = {
+      agency_city:""
     }; 
 
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);*/
+    this.onSubmit = this.onSubmit.bind(this);
     //this.notificationDOMRef = React.createRef();
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.getAgentsByConditions(this.state);
   }
 
   componentDidMount() {
@@ -81,42 +86,14 @@ class AgentDashboard extends Component {
                     <hr />
                     <form onSubmit={this.onSubmit}>
                     <div className="row">
-                    <div className="col">
-                    <select name="identifier" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
-                       <option value="-1" disabled>Identifier</option>
-                          {agents.map(agent => (
-                            <option value={agent.identifier}  key={agent.id}>{agent.identifier}</option>
-                            ))
-                          }
-                    </select>
-                      </div>
                       <div className="col">
-                      <select name="email" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
-                      <option value="-1" disabled>Email</option>
-                         {agents.map(agent => (
-                        <option value={agent.identifier}  key={agent.id}>{agent.email}</option>
-                       ))
-                       }
-             </select>
-             </div>
-                      <div className="col">
-                           <select name="agency_name" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
-                             <option value="-1" disabled>Agency name</option>
+                           <select name="agency_city" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
+                             <option value="-1" disabled>Agency city</option>
                               {agencies.map(agency => (
-                               <option value={agency.name}  key={agency.id}>{agency.name}</option>
+                               <option value={agency.city}  key={agency.id}>{agency.city}</option>
                               ))
                               }
                     </select>
-                      </div>
-                      <div className="col">
-                      <select name="address" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
-                      <option value="-1" disabled>Agency address</option>
-                         {agencies.map(agency => (
-                        <option value={agency.name}  key={agency.id}>{agency.address
-                        }</option>
-                       ))
-                       }
-                      </select>
                       </div>
                       </div>
                       <div className="row justify-content-end">
@@ -167,6 +144,7 @@ AgentDashboard.propTypes = {
   //demand: PropTypes.object.isRequired,
   getAgents: PropTypes.func.isRequired,
   getAgencies: PropTypes.func.isRequired,
+  getAgentsByConditions:PropTypes.func.isRequired
   //getDemandsByConditions:PropTypes.func.isRequired
 };
 
@@ -177,4 +155,4 @@ const mapStateToProps = state => ({
   location:state.location.previousLocation
 });
 
-export default connect(mapStateToProps,{getAgents,getAgencies})(AgentDashboard);
+export default connect(mapStateToProps,{getAgents,getAgencies,getAgentsByConditions})(AgentDashboard);

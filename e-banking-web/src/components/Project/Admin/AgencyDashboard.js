@@ -69,6 +69,7 @@ class AgencyDashboard extends Component {
     render() {
 
       const {agencies}=this.props.agency;
+      var cities=[];
         return (
             <div>
             <div className="agent">
@@ -81,24 +82,15 @@ class AgencyDashboard extends Component {
                     <form onSubmit={this.onSubmit}>
                     <div className="row">
                       <div className="col">
-                           <select name="name" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
-                           <option value={'-1'}  disabled>Agency name</option>
-                           {agencies.map(agency => (
-                              <option value={agency.name}  key={agency.id}>{agency.name}</option>
-                              ))
+                           <select name="city" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
+                           <option value={'-1'}  disabled>Agency city</option>
+                           {
+                             agencies.map(agency => ( 
+                              <option value={agency.city}  key={agency.id}>{agency.city}</option>
+                           ))
                               }
                     </select>
                       </div>
-                      <div className="col">
-                      <select name="address" defaultValue={'-1'} className="form-control form-control-lg" onChange={this.onChange}>
-                      <option value="-1" disabled>Address</option>
-                         {agencies.map(agency => (
-                        <option value={agency.address}  key={agency.id}>{agency.address
-                        }</option>
-                       ))
-                       }
-                       </select>
-                       </div>
                       </div>
                       <div className="row justify-content-end">
                       <div className="col-md-2">

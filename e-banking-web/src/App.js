@@ -31,8 +31,8 @@ function App() {
   <Route exact path="/addagent" component={AddAgent} />
   <Route exact path="/updateAgent/:identifier" component={UpdateAgent} />
   <Route exact path="/viewAgent/:identifier" component={ViewAgent} />
-  <Route exact path="/updateAgency/:name" component={UpdateAgency} />
-  <Route exact path="/viewAgency/:name" component={ViewAgency} />
+  <Route exact path="/updateAgency/:id" component={UpdateAgency} />
+  <Route exact path="/viewAgency/:id" component={ViewAgency} />
   <Route exact path="/addagency" component={AddAgency} />
   <Route exact path="/login" component={Login} />
   </Router>

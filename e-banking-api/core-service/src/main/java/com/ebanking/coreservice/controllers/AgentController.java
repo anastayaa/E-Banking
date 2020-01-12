@@ -36,11 +36,20 @@ public class AgentController {
         return agentService.findAllAgent();
     }
 
+    @GetMapping("/agency/{city}")
+    public ResponseEntity<?> getAgentsByAgencyCity(@PathVariable String city) {
+        Iterable<Agent> agents=agentService.findAgentsByAgencyCity(city);
+        return new ResponseEntity<Iterable<Agent>>(agents,HttpStatus.OK);
+
+    }
+
     @GetMapping("/{identifier}")
     public ResponseEntity<Agent> getAgentByIdentifier(@PathVariable String identifier) {
         Agent agent = agentService.findAgentByIdentifier(identifier);
         return new ResponseEntity<>(agent, HttpStatus.OK);
     }
+
+
 
     @DeleteMapping("{identifier}")
     public ResponseEntity<String> deleteAgentByIdentifier(@PathVariable String identifier) {

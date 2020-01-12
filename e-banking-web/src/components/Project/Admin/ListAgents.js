@@ -42,7 +42,7 @@ class ListAgents extends Component {
                   <th>Lastname</th>
                   <th>Email</th>
                   <th>Agency name</th>
-                  <th>Agency address</th>
+                  <th>Agency city</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -54,7 +54,7 @@ class ListAgents extends Component {
                   <th>{agent.lastName}</th>
                   <th>{agent.email}</th>
                   <th>{agent.agency.name}</th>
-                  <th>{agent.agency.address}</th>
+                  <th>{agent.agency.city}</th>
                   <th>
                      <Link to={`/viewAgent/${agent.identifier}`}>
                      <span className="fas fa-eye"

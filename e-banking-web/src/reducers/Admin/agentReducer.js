@@ -1,5 +1,6 @@
 import { 
     GET_AGENTS,
+    GET_AGENTS_CITY,
     GET_AGENT
 } from "../../actions/types";
 
@@ -17,6 +18,11 @@ export default function(state=initialState,action){
             return{
                 ...state,agents:action.payload
             };
+            case GET_AGENTS_CITY:
+            
+                return{
+                    ...state,agents:action.payload
+                };
             case GET_AGENT:
             
                 return{

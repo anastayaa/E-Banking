@@ -144,9 +144,9 @@ class AddAgent extends Component {
                         { 
                           agencies.map(agency => (
                             agency.id===id?
-                          <option value={JSON.stringify(agency)} key={agency.id} selected>{agency.name}</option>
+                          <option value={JSON.stringify(agency)} key={agency.id} selected>{agency.name}-{agency.address}-{agency.city}</option>
                           :
-                          <option value={JSON.stringify(agency)} key={agency.id}>{agency.name}</option>
+                          <option value={JSON.stringify(agency)} key={agency.id}>{agency.name}-{agency.address}-{agency.city}</option>
                          )) }
                       </select>
                      </div>

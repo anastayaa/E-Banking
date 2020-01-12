@@ -12,14 +12,14 @@ class ListAgencies extends Component {
    {
      super();
    }
-   alerting = (name) => {
+   alerting = (id) => {
     confirmAlert({
       title: "Confirm deletion",
       message: "Are you sure to do this.",
       buttons: [
         {
           label: "Yes",
-          onClick: () => this.props.deleteAgency(name,this.props.history)
+          onClick: () => this.props.deleteAgency(id,this.props.history)
         },
         {
           label: "No",
@@ -42,6 +42,7 @@ class ListAgencies extends Component {
                 <tr>
                   <th>Name</th>
                   <th>Address</th>
+                  <th>City</th>
                   <th>Phone</th>
                   <th>Action</th>
                 </tr>
@@ -51,16 +52,17 @@ class ListAgencies extends Component {
                 <tr key={agency.id}>
                   <th>{agency.name}</th>
                   <th>{agency.address}</th>
+                  <th>{agency.city}</th>
                   <th>{agency.phone}</th>
                   <th>
-                     <Link to={`/viewAgency/${agency.name}`}>
+                     <Link to={`/viewAgency/${agency.id}`}>
                      <span className="fas fa-eye"
                       title="Details"
                      />
                     </Link>
                      {' '}
                      
-                     <Link to={`/updateAgency/${agency.name}`}>
+                     <Link to={`/updateAgency/${agency.id}`}>
                      <span className="fas fa-edit text-warning"
                       title="Edit"
                      />
@@ -68,7 +70,7 @@ class ListAgencies extends Component {
                     {' '}
                     <Link to="/agencydashboard"  >
                     <span className="fas fa-times text-danger"
-                     onClick={()=>this.alerting(agency.name)}
+                     onClick={()=>this.alerting(agency.id)}
                      title="Delete"
                     />
                    </Link>

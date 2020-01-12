@@ -11,6 +11,7 @@ class AddAgency extends Component {
 
     this.state = {
       name: "",
+      city:"",
       address: "",
       phone:"",
       errors: {}
@@ -33,6 +34,7 @@ class AddAgency extends Component {
     e.preventDefault();
     const newAgency = {
       name: this.state.name,
+      city: this.state.city,
       address: this.state.address,
       phone:this.state.phone,
     };
@@ -69,6 +71,25 @@ class AddAgency extends Component {
                           <div className="invalid-feedback">{errors.name}</div>
                         )}
                       </div>
+                      </div>
+                      <br/><br/>
+                      <div className="row">
+                      <div className="col">
+                      <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.city
+                        })}
+                        placeholder="City"
+                        name="city"
+                        value={this.state.city}
+                        onChange={this.onChange}
+                      />
+                      {errors.city && (
+                        <div className="invalid-feedback">{errors.city}</div>
+                      )}
+                    </div>
                       </div>
                       <br/><br/>
                       <div className="row">

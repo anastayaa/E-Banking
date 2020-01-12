@@ -3,7 +3,7 @@ import {
         GET_AGENCIES,
         GET_AGENCIES_ALL,
         GET_AGENCIES_ADDRESS,
-        GET_AGENCIES_NAME,
+        GET_AGENCIES_CITY,
         GET_AGENCY,
         LOCATION_CHANGE,
         GET_ERRORS 
@@ -43,9 +43,9 @@ export const addAgency=(agency,history)=>async dispatch=>{
   
 
 }*/
-export const deleteAgency=(name,history)=>async dispatch=>{
+export const deleteAgency=(id,history)=>async dispatch=>{
   //console.log(id)
-  const res =await axios.delete(`http://localhost:8080/api/agency/${name}`)
+  const res =await axios.delete(`http://localhost:8080/api/agency/${id}`)
   const res1 =await axios.get("http://localhost:8080/api/agency/all")
   dispatch({
     type:GET_AGENCIES,
@@ -60,10 +60,9 @@ export const getAgency=(agency)=>async dispatch=>{
   })
 }
 
-export const getAgencyByName=(name)=>async dispatch=>{
+export const getAgencyById=(id)=>async dispatch=>{
     
- const res =await axios.get(`http://localhost:8080/api/agency/${name}`)
- //const res =await axios.get("http://localhost:8080/api/agency/CIH")
+ const res =await axios.get(`http://localhost:8080/api/agency/${id}`)
   dispatch({
       type:GET_AGENCY,
       payload:res.data
@@ -88,24 +87,16 @@ export const getAgencies=()=>async dispatch=>{
 export const getAgenciesByConditions=(conditions)=>async dispatch=>{
     
   let res;
+  let city=conditions.city;
   let name=conditions.name;
-  let address=conditions.address;
 
-     if(name!=="" && address==="")
+     if(city!=="")
      {
-       res =await axios.get(`http://localhost:8080/api/agency/${name}`)
+       res =await axios.get(`http://localhost:8080/api/agency/all/${city}`)
        dispatch({
-         type:GET_AGENCIES_NAME,
+         type:GET_AGENCIES_CITY,
           payload:res.data
         })
       }
-      if(name==="" && address!=="")
-    {
-      res =await axios.get(`http://localhost:8080/api/agency/all/${address}`)
-      dispatch({
-        type:GET_AGENCIES_ADDRESS,
-         payload:res.data
-       })
-     }
-
+  
 }

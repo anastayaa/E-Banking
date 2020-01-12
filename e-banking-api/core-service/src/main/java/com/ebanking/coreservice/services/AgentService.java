@@ -11,6 +11,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 @Service
@@ -21,16 +23,18 @@ public class AgentService {
     @Autowired
     private AgencyRepository agencyRepository;
     @Autowired
+    private AgencyService agencyService;
+    @Autowired
     private JavaMailSender mailSender;
 
 
-    public Agent saveAgent(String agencyId, Agent agent) {
+    public Agent saveAgent(Agent agent) {
         try {
-            Agency agency = agencyRepository.findAgencyById(Long.parseLong(agencyId));
-            if (agency == null) {
-                throw new AgencyNameException("Agency with name '" + agencyId + "' not found");
-            }
-            agent.setAgency(agency);
+          //  Agency agency = agencyRepository.findAgencyById(agent.getAgency().getId());
+           // if (agency == null) {
+            //    throw new AgencyNameException("Agency with name '" + agency.getName() + "' not found");
+           // }
+            agent.setAgency(agent.getAgency());
             String[] helper = agent.getEmail().split("@");
             agent.setIdentifier(agent.getFirstName() + "-" + helper[0]);
             agent.setLogin(agent.getIdentifier());
@@ -48,6 +52,14 @@ public class AgentService {
         public Iterable<Agent> findAllAgent () {
             return agentRepository.findAll();
         }
+
+    public Iterable<Agent> findAgentsByAgencyCity (String city) {
+        Iterable<Agency> agencies=agencyService.findAllAgenciesByCity(city);
+        Collection<Agent> agents= new ArrayList<>();
+        agencies.forEach((agency)->agentRepository.findByAgency(agency).forEach((agent)->agents.add(agent)));
+        return agents;
+
+    }
 
         public Agent findAgentByIdentifier (String identifier){
             Agent agent = agentRepository.findByIdentifier(identifier);

@@ -2,7 +2,7 @@ import {
     GET_AGENCIES,
     GET_AGENCY,
     GET_AGENCIES_ADDRESS,
-    GET_AGENCIES_NAME
+    GET_AGENCIES_CITY
 } from "../../actions/types";
 
 
@@ -24,7 +24,7 @@ export default function(state=initialState,action){
             return{
                 ...state,agencies:action.payload
                 };
-        case GET_AGENCIES_NAME:
+        case GET_AGENCIES_CITY:
             
                 return{
                 ...state,agencies:action.payload

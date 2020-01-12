@@ -45,6 +45,7 @@ class ViewAgent extends Component {
              const details = {
               name:((agent || {}).agency || {}).name,
               address:((agent || {}).agency || {}).address,
+              city:((agent || {}).agency || {}).city,
               phone:((agent || {}).agency || {}).phone,
              } 
              
@@ -121,7 +122,7 @@ class ViewAgent extends Component {
                         <h5 className="text-left">{details.name}</h5>
                         </div>
                         <div className="col">
-                        <h5 className="text-left">{details.address}</h5>
+                        <h5 className="text-left">{details.address}-{details.city}</h5>
                         </div>
                         <div className="col">
                         <h5 className="text-left">{details.phone}</h5>

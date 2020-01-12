@@ -126,7 +126,7 @@ class AddAgent extends Component {
                           <option 
                            value={JSON.stringify(agency)}
                             key={agency.id} 
-                          >{agency.name}</option>
+                          >{agency.name}-{agency.address}-{agency.city}</option>
                          )) }
                       </select>
                      </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
-import {getAgencyByName,deleteAgency} from '../../../actions/Admin/agencyActions';
+import {getAgencyById,deleteAgency} from '../../../actions/Admin/agencyActions';
 import { confirmAlert } from 'react-confirm-alert'; 
 //import ReactNotification from "react-notifications-component";
 //import  Dialog from 'react-bootstrap-dialog';
@@ -15,14 +15,14 @@ class ViewAgency extends Component {
         super();
         };
 
-        alerting = (name) => {
+        alerting = (id) => {
           confirmAlert({
             title: "Confirm deletion",
             message: "Are you sure to do this.",
             buttons: [
               {
                 label: "Yes",
-                onClick: () => {this.props.deleteAgency(name,this.props.history)}
+                onClick: () => {this.props.deleteAgency(id,this.props.history)}
               },
               {
                 label: "No",
@@ -34,8 +34,8 @@ class ViewAgency extends Component {
 
        componentDidMount()
        {
-        const { name } = this.props.match.params;
-        this.props.getAgencyByName(name);
+        const { id } = this.props.match.params;
+        this.props.getAgencyById(id);
        }
 
        
@@ -90,7 +90,7 @@ class ViewAgency extends Component {
                         <h5 className="text-left">{agency.name}</h5>
                         </div>
                         <div className="col">
-                        <h5 className="text-left">{agency.address}</h5>
+                        <h5 className="text-left">{agency.address}-{agency.city}</h5>
                         </div>
                         <div className="col">
                         <h5 className="text-left">{agency.phone}</h5>
@@ -134,8 +134,8 @@ class ViewAgency extends Component {
                      <div className="row justify-content-end">
                      
                       <div className="col-md-3">
-                      <Link to={`/viewAgency/${agency.name}`}
-                        onClick={()=>this.alerting(agency.name)}
+                      <Link to={`/viewAgency/${agency.id}`}
+                        onClick={()=>this.alerting(agency.id)}
                         className="btn  btn-block mt-4"
                         style={{backgroundColor:'#f2f2f2',color:'#EB5C09'}}>
                         <span className="fas fa-times"/>{' '}
@@ -144,7 +144,7 @@ class ViewAgency extends Component {
                      </div>
                     
                       <div className="col-md-2">
-                      <Link to={`/updateAgency/${agency.name}`}
+                      <Link to={`/updateAgency/${agency.id}`}
                        className="btn text-white btn-block mt-4"
                         style={{backgroundColor:'#EB5C09'}}>
                         <span className="fas fa-edit"/>{' '}
@@ -165,7 +165,7 @@ class ViewAgency extends Component {
 ViewAgency.propTypes = {
 
     agency:PropTypes.object.isRequired,
-    getAgencyByName: PropTypes.func.isRequired,
+    getAgencyById: PropTypes.func.isRequired,
     deleteAgency: PropTypes.func.isRequired,
   };
 
@@ -175,4 +175,4 @@ ViewAgency.propTypes = {
     agency: state.agency.agency
   });
   
-  export default connect(mapStateToProps,{getAgencyByName,deleteAgency} )(ViewAgency);
+  export default connect(mapStateToProps,{getAgencyById,deleteAgency} )(ViewAgency);
