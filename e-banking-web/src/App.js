@@ -17,24 +17,60 @@ import UpdateAgency from './components/Project/Admin/UpdateAgency';
 import UpdateAgent from './components/Project/Admin/UpdateAgent';
 import ViewAgency from './components/Project/Admin/ViewAgency';
 import ViewAgent from './components/Project/Admin/ViewAgent';
+import jwt_decode from "jwt-decode";
+import setJWTToken from "./securityUtils/setJWTToken";
+import { SET_CURRENT_USER } from "./actions/types";
+import { logout } from "./actions/Admin/securityActions";
+import SecuredRoute from './securityUtils/SecuredRoute';
 
 
 function App() {
+
+  const jwtToken = localStorage.jwtToken;
+
+if (jwtToken) {
+  setJWTToken(jwtToken);
+  const decoded_jwtToken = jwt_decode(jwtToken);
+  store.dispatch({
+    type: SET_CURRENT_USER,
+    payload: decoded_jwtToken
+  });
+
+  const currentTime = Date.now() / 1000;
+  if (decoded_jwtToken.exp < currentTime) {
+    store.dispatch(logout());
+    window.location.href = "/";
+  }
+}
   return (
   <Provider store={store}>
   <div className="App">
   <Router>
   <Header/>
+  {
+    //Public Routes
+  }
+
   <Route exact path="/" component={Landing} />
-  <Route exact path="/agencydashboard" component={AgencyDashboard} />
-  <Route exact path="/agentdashboard" component={AgentDashboard} />
-  <Route exact path="/addagent" component={AddAgent} />
-  <Route exact path="/updateAgent/:identifier" component={UpdateAgent} />
-  <Route exact path="/viewAgent/:identifier" component={ViewAgent} />
-  <Route exact path="/updateAgency/:id" component={UpdateAgency} />
-  <Route exact path="/viewAgency/:id" component={ViewAgency} />
-  <Route exact path="/addagency" component={AddAgency} />
   <Route exact path="/login" component={Login} />
+
+  {
+    //Private Routes
+  }
+ 
+  {
+    //Private Routes
+  }
+  <Switch>
+  <SecuredRoute exact path="/agencydashboard" component={AgencyDashboard} />
+  <SecuredRoute exact path="/agentdashboard" component={AgentDashboard} />
+  <SecuredRoute exact path="/addagent" component={AddAgent} />
+  <SecuredRoute exact path="/updateAgent/:identifier" component={UpdateAgent} />
+  <SecuredRoute exact path="/viewAgent/:identifier" component={ViewAgent} />
+  <SecuredRoute exact path="/updateAgency/:id" component={UpdateAgency} />
+  <SecuredRoute exact path="/viewAgency/:id" component={ViewAgency} />
+  <SecuredRoute exact path="/addagency" component={AddAgency} />
+  </Switch>
   </Router>
   </div>
   </Provider>
