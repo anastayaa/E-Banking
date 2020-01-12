@@ -49,8 +49,6 @@ public class AgentController {
         return new ResponseEntity<>(agent, HttpStatus.OK);
     }
 
-
-
     @DeleteMapping("{identifier}")
     public ResponseEntity<String> deleteAgentByIdentifier(@PathVariable String identifier) {
         agentService.deleteByAgentIdentifier(identifier);

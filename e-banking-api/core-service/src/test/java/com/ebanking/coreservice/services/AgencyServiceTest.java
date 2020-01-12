@@ -40,6 +40,17 @@ public class AgencyServiceTest {
         assertEquals(newAgency.getId(), agency.getId());
     }
 
+    @Test(expected = AgencyIdException.class)
+    public void saveAgentAlreadyExistTest(){
+        Agency newAgency = new Agency();
+        newAgency.setId(1L);
+        newAgency.setName("CIH Plateau");
+
+        when(agencyRepository.save(any(Agency.class))).thenThrow(AgencyIdException.class);
+
+        agencyService.saveAgency(newAgency);
+    }
+
     @Test
     public void findAllAgenciesTest() {
         List<Agency> agencies = new ArrayList<>();
@@ -86,7 +97,7 @@ public class AgencyServiceTest {
 
         when(agencyRepository.findAgencyById(1L)).thenReturn(agency);
 
-        Agency expectedAgency = agencyService.findAgencyById("1");
+        Agency expectedAgency = agencyService.findAgencyById(1L);
 
         assertEquals(expectedAgency, agency);
     }
@@ -97,7 +108,7 @@ public class AgencyServiceTest {
 
         when(agencyRepository.findAgencyById(id)).thenThrow(AgencyIdException.class);
 
-        agencyService.findAgencyById("1");
+        agencyService.findAgencyById(1L);
     }
 
     @Test
@@ -107,7 +118,7 @@ public class AgencyServiceTest {
         agency.setName("CIH Plateau");
 
         when(agencyRepository.findAgencyById(1L)).thenReturn(agency);
-        agencyService.deleteAgencyById("1");
+        agencyService.deleteAgencyById(1L);
 
         verify(agencyRepository, times(1)).delete(any(Agency.class));
     }
@@ -118,6 +129,6 @@ public class AgencyServiceTest {
 
         when(agencyRepository.findAgencyById(id)).thenThrow(AgencyIdException.class);
 
-        agencyService.deleteAgencyById("1");
+        agencyService.deleteAgencyById(1L);
     }
 }

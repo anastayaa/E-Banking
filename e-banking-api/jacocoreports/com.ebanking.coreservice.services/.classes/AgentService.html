@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AgentService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.ebanking.coreservice.services</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AgentService (com.ebanking.coreservice.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AgentService</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.ebanking.coreservice.services;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.ebanking.coreservice.Exceptions.AgencyIdException;
+<i>4</i>&nbsp;import com.ebanking.coreservice.Exceptions.AgentEmailException;
+<i>5</i>&nbsp;import com.ebanking.coreservice.models.Agency;
+<i>6</i>&nbsp;import com.ebanking.coreservice.models.Agent;
+<i>7</i>&nbsp;import com.ebanking.coreservice.repositories.AgencyRepository;
+<i>8</i>&nbsp;import com.ebanking.coreservice.repositories.AgentRepository;
+<i>9</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>10</i>&nbsp;import org.springframework.mail.SimpleMailMessage;
+<i>11</i>&nbsp;import org.springframework.mail.javamail.JavaMailSender;
+<i>12</i>&nbsp;import org.springframework.stereotype.Service;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import java.util.ArrayList;
+<i>15</i>&nbsp;import java.util.Collection;
+<i>16</i>&nbsp;import java.util.Random;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;@Service
+<b class="nc"><i>19</i>&nbsp;public class AgentService {</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Autowired
+<i>22</i>&nbsp;    private AgentRepository agentRepository;
+<i>23</i>&nbsp;    @Autowired
+<i>24</i>&nbsp;    private AgencyRepository agencyRepository;
+<i>25</i>&nbsp;    @Autowired
+<i>26</i>&nbsp;    private AgencyService agencyService;
+<i>27</i>&nbsp;    @Autowired
+<i>28</i>&nbsp;    private JavaMailSender mailSender;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public Agent saveAgent(Agent agent) {
+<i>32</i>&nbsp;        try {
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;            agent.setAgency(agent.getAgency());</b>
+<b class="nc"><i>35</i>&nbsp;            String[] helper = agent.getEmail().split(&quot;@&quot;);</b>
+<b class="nc"><i>36</i>&nbsp;            agent.setIdentifier(agent.getFirstName() + &quot;-&quot; + helper[0]);</b>
+<b class="nc"><i>37</i>&nbsp;            agent.setLogin(agent.getIdentifier());</b>
+<b class="nc"><i>38</i>&nbsp;            agent.setPassword(agent.getIdentifier() + &quot;&quot; + new Random().nextInt());</b>
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;            Agent newAgent = agentRepository.save(agent);</b>
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;            this.sendMail(newAgent);</b>
+<b class="nc"><i>43</i>&nbsp;            return newAgent;</b>
+<b class="nc"><i>44</i>&nbsp;        } catch (Exception ex) {</b>
+<b class="nc"><i>45</i>&nbsp;            throw new AgentEmailException(&quot;Agent with email &#39;&quot; + agent.getEmail() + &quot;&#39; already exist&quot;);</b>
+<i>46</i>&nbsp;        }
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;        public Iterable&lt;Agent&gt; findAllAgent () {
+<b class="nc"><i>50</i>&nbsp;            return agentRepository.findAll();</b>
+<i>51</i>&nbsp;        }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public Iterable&lt;Agent&gt; findAgentsByAgencyCity (String city) {
+<b class="nc"><i>54</i>&nbsp;        Iterable&lt;Agency&gt; agencies=agencyService.findAllAgenciesByCity(city);</b>
+<b class="nc"><i>55</i>&nbsp;        Collection&lt;Agent&gt; agents= new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>56</i>&nbsp;        agencies.forEach((agency)-&gt;agentRepository.findByAgency(agency).forEach((agent)-&gt;agents.add(agent)));</b>
+<b class="nc"><i>57</i>&nbsp;        return agents;</b>
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;        public Agent findAgentByIdentifier (String identifier){
+<b class="nc"><i>62</i>&nbsp;            Agent agent = agentRepository.findByIdentifier(identifier);</b>
+<b class="nc"><i>63</i>&nbsp;            if (agent == null) {</b>
+<b class="nc"><i>64</i>&nbsp;                throw new AgentEmailException(&quot;Agent with identifier &#39;&quot; + identifier + &quot;&#39; doesn&#39;t exist&quot;);</b>
+<i>65</i>&nbsp;            }
+<b class="nc"><i>66</i>&nbsp;            return agent;</b>
+<i>67</i>&nbsp;        }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;        public void deleteByAgentIdentifier (String identifier){
+<b class="nc"><i>70</i>&nbsp;            Agent agent = this.findAgentByIdentifier(identifier);</b>
+<b class="nc"><i>71</i>&nbsp;            agentRepository.delete(agent);</b>
+<i>72</i>&nbsp;        }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;        public void sendMail (Agent agent){
+<b class="nc"><i>75</i>&nbsp;            SimpleMailMessage msg = new SimpleMailMessage();</b>
+<b class="nc"><i>76</i>&nbsp;            String to = agent.getEmail();</b>
+<b class="nc"><i>77</i>&nbsp;            String subject = &quot;Agency Bank: Login and Password account&quot;;</b>
+<b class="nc"><i>78</i>&nbsp;            String login = agent.getLogin();</b>
+<b class="nc"><i>79</i>&nbsp;            String password = agent.getPassword();</b>
+<b class="nc"><i>80</i>&nbsp;            String text = &quot;Your login account: &quot; + login + &quot;, Your password account: &quot; + password;</b>
+<b class="nc"><i>81</i>&nbsp;            msg.setTo(to);</b>
+<b class="nc"><i>82</i>&nbsp;            msg.setSubject(subject);</b>
+<b class="nc"><i>83</i>&nbsp;            msg.setText(text);</b>
+<b class="nc"><i>84</i>&nbsp;            mailSender.send(msg);</b>
+<i>85</i>&nbsp;        }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    }
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-01-12 14:40</div>
+</div>
+</body>
+</html>
