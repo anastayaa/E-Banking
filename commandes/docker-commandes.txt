@@ -1,0 +1,21 @@
+docker run -d -p 3306:3306 --name=mysql-db \
+-e MYSQL_ROOT_PASSWORD=root \
+-e MYSQL_PASSWORD=root \
+-v mysql-vm:/var/lib/mysql \
+mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+
+docker run -d -p 3306:3306 -d --name=mysql-db \
+-e MYSQL_ROOT_PASSWORD=root \
+-e MYSQL_USER=squashtm \
+-e MYSQL_PASSWORD=root \
+-e MYSQL_DATABASE=squashtm \
+-v squash-tm-db-mdb:/var/lib/mysql \
+mariadb:10.2.22-bionic --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+
+docker run -it -d --name=squash-tm \
+--link mysql-db:mysql \
+-v squash-tm-logs:/opt/squash-tm/logs -v squash-tm-plugins:/opt/squash-tm/plugins \
+-p 8090:8080 \
+squashtest/squash-tm
